@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.nicolas.pos.model.Order;
 import com.nicolas.pos.model.Product;
+import com.nicolas.pos.test.GenerateOrder;
 import com.nicolas.pos.utilities.LoginController;
 import com.nicolas.pos.utilities.WindowsUtilities;
 import com.nicolas.pos.dao.DaoFactory;
@@ -91,7 +92,7 @@ public class NewOrder extends JFrame {
 						
 					}else{
 						
-						DaoFactory.getOrderDao().save(newOrder);
+						LoginController.getLoggedInUser().getUserRole().createOrder(GenerateOrder.GenerateRandomOrder());
 						
 						JOptionPane.showMessageDialog(null, "Order created!", "Success", JOptionPane.INFORMATION_MESSAGE);
 						

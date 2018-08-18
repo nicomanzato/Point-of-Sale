@@ -11,13 +11,13 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.nicolas.pos.model.Order;
+import com.nicolas.pos.utilities.LoginController;
 
 public class OrderDaoHibernate extends DaoHibernate implements OrderDao{
 		
 	public OrderDaoHibernate(){}
 	
 	public void save(Order order) {
-		
 		super.save(order);
 		
 		this.setChanged();

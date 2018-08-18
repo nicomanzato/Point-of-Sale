@@ -6,6 +6,7 @@ import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.nicolas.pos.dao.DaoFactory;
+import com.nicolas.pos.utilities.LoginController;
 
 @Entity  
 @Table(name = "USER_ROLES")  
@@ -73,12 +74,12 @@ public abstract class UserRole {
 		return false;
 	}
 
-	public boolean createOrder(Order order, User user) {
+	public boolean createOrder(Order order) {
 		
 		if (this.canCreateOrder()) {
 			
-			user.getOrders().add(order);
-			DaoFactory.getUserDao().update(user);
+			LoginController.getLoggedInUser().getOrders().add(order);
+			DaoFactory.getOrderDao().save(order);
 		
 			return true;
 		}
@@ -90,12 +91,12 @@ public abstract class UserRole {
 		
 		if ( this.canDeleteOrder()) {
 			
-			order.setProducts(new ArrayList<OrderedProduct>());
-			owner.getOrders().remove(order);
+			//owner.getOrders().remove(order);
+			//order.setProducts(new ArrayList<OrderedProduct>());
 			
-			DaoFactory.getOrderDao().update(order);
-			DaoFactory.getOrderDao().delete(order);
-			DaoFactory.getUserDao().update(owner);
+			//DaoFactory.getOrderDao().update(order);
+			//DaoFactory.getOrderDao().delete(order);
+			//DaoFactory.getUserDao().update(owner);
 		
 			return true;
 		}

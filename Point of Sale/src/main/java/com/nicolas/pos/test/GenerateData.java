@@ -2,6 +2,7 @@ package com.nicolas.pos.test;
 
 import com.nicolas.pos.dao.DaoFactory;
 import com.nicolas.pos.model.User;
+import com.nicolas.pos.utilities.LoginController;
 
 public class GenerateData {
 	
@@ -15,7 +16,7 @@ public class GenerateData {
 		
 		DaoFactory.getUserDao().save(GenerateUser.GenerateCashier());
 		
-		User user = DaoFactory.getUserDao().getUser(1);
+		LoginController.setLoggedInUser(DaoFactory.getUserDao().getUser(1));
 
 		for(int i=0; i < cantProducts; i++) {
 			
@@ -25,8 +26,8 @@ public class GenerateData {
 		
 		for(int i=0; i < cantOrders; i++) {
 			
-			user.getUserRole().createOrder(GenerateOrder.GenerateRandomOrder(), user);
-					
+			LoginController.getLoggedInUser().getUserRole().createOrder(GenerateOrder.GenerateRandomOrder());
+						
 		}
 		
 		

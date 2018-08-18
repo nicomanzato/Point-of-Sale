@@ -103,7 +103,7 @@ public class User {
 	}
 	
 	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "USER_ID", nullable = false)
 	@Cascade(CascadeType.ALL)
 	public List<Order> getOrders() {
 		return orders;

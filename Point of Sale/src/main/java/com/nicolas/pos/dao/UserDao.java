@@ -1,6 +1,8 @@
 package com.nicolas.pos.dao;
 
 import java.util.List;
+import java.util.Observer;
+
 import com.nicolas.pos.model.User;
 
 public interface UserDao {
@@ -11,5 +13,6 @@ public interface UserDao {
 	public List<User> getUsers();
 	public User getUser(long idUser);
 	public User getUser(String username, String password);
+	public void addObserver(Observer observer);
 
 }

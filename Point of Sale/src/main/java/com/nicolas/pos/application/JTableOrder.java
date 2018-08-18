@@ -107,6 +107,7 @@ public class JTableOrder extends JTable implements Observer{
 		});
 		
 		DaoFactory.getOrderDao().addObserver(this);
+		DaoFactory.getUserDao().addObserver(this);
 		
 	}
 	

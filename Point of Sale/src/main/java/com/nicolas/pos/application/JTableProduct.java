@@ -122,6 +122,7 @@ public class JTableProduct extends JTable implements Observer{
 		
 		DaoFactory.getProductDao().addObserver(this);
 		
+		
 	}
 	
 	public TableModel createModel(){
