@@ -1,6 +1,5 @@
 package com.nicolas.pos.model;
 
-import com.nicolas.pos.dao.DaoFactory;
 import javax.persistence.*;
 
 @Entity  
@@ -8,55 +7,39 @@ import javax.persistence.*;
 public class ManagerUserRole extends UserRole{
 
 	@Override
-	public boolean createProduct(Product product, User user) {
-		
-		DaoFactory.getProductDao().save(product);
+	public boolean canCreateProduct() {
 		return true;
 	}
 
 	@Override
-	public boolean deleteProduct(Product product, User user) {
-		
-		DaoFactory.getProductDao().delete(product);
-		return false;
+	public boolean canDeleteProduct() {
+		return true;
 	}
 
 	@Override
-	public boolean updateProduct(Product product, User user) {
-		
-		DaoFactory.getProductDao().update(product);
-		return false;
+	public boolean canUpdateProduct() {
+		return true;
 	}
 
 	@Override
-	public boolean createOrder(Order order, User user) {
-		
-		order.setOwner(user);
-		user.getOrders().add(order);
-		
-		DaoFactory.getOrderDao().save(order);
-		
-		return false;
+	public boolean canCreateOrder() {
+		return true;
 	}
 
 	@Override
-	public boolean deleteOrder(Order order, User user) {
-		
-		DaoFactory.getOrderDao().delete(order);
-		return false;
+	public boolean canDeleteOrder() {
+		return true;
 	}
 
 	@Override
-	public boolean updateOrder(Order order, User user) {
-		
-		DaoFactory.getOrderDao().delete(order);
-		return false;
+	public boolean canUpdateOrder() {
+		return true;
 	}
 
 	@Override
-	public boolean createUser(User user) {
-		
-		return false;
+	public boolean canCreateUser() {
+		return true;
 	}
 
+	
 }

@@ -96,7 +96,7 @@ public class UserDaoHibernate extends DaoHibernate implements UserDao {
 			CriteriaQuery<User> criteria = session.getCriteriaBuilder().createQuery( User.class );
 			Root<User> userRoot = criteria.from(User.class);
 			criteria.select(userRoot);
-			criteria.where( getSession().getCriteriaBuilder().equal( userRoot.get("username") , username), getSession().getCriteriaBuilder().equal( userRoot.get("password") , password) );
+			criteria.where( session.getCriteriaBuilder().equal( userRoot.get("username") , username), getSession().getCriteriaBuilder().equal( userRoot.get("password") , password) );
 			
 			user = session.createQuery( criteria ).getSingleResult();
 			

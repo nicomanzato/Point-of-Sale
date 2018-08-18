@@ -17,6 +17,9 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.nicolas.pos.dao.DaoFactory;
+import com.nicolas.pos.utilities.LoginController;
+
 @Entity()
 @Table( name = "USERS")
 public class User {
@@ -40,7 +43,7 @@ public class User {
 		super();
 		this.userId = id;
 		this.username = name;
-		this.password = password;
+		this.password = LoginController.encryptPassword(password);
 		this.orders = orders;
 		this.userRole = userRole;
 	}
@@ -48,7 +51,7 @@ public class User {
 	public User(String name, String password, UserRole userRole) {
 		super();
 		this.username = name;
-		this.password = password;
+		this.password = LoginController.encryptPassword(password);
 		this.userRole = userRole;
 		this.orders = new ArrayList<Order>();
 	}
@@ -79,10 +82,18 @@ public class User {
 		return password;
 	}
 
-	public boolean changePassword( String oldPassword, String newPassword ) {
+	public boolean changePassword( String encryptedOldPassword, String newPassword ) {
 		
 		
-		if (this.getPassword() == oldPassword) { this.setPassword(newPassword); return true; }
+		if (this.getPassword().equals(encryptedOldPassword)) { 
+			
+			this.setPassword(LoginController.encryptPassword(newPassword)); 
+			
+			DaoFactory.getUserDao().update(this);
+			
+			return true;
+			
+		}
 		
 		return false;
 	}
@@ -90,9 +101,9 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "owner")
+	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+	@JoinColumn(name = "USER_ID")
 	@Cascade(CascadeType.ALL)
 	public List<Order> getOrders() {
 		return orders;
@@ -100,12 +111,6 @@ public class User {
 
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
-	}
-	
-	public void createOrder(Order order) {
-		
-		this.getUserRole().createOrder(order, this);
-		
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -118,6 +123,4 @@ public class User {
 	public void setUserRole(UserRole userRole) {
 		this.userRole = userRole;
 	}
-	
-
 }

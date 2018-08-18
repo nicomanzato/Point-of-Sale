@@ -15,6 +15,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import com.nicolas.pos.model.Product;
+import com.nicolas.pos.utilities.LoginController;
 import com.nicolas.pos.utilities.WindowsUtilities;
 import com.nicolas.pos.dao.DaoFactory;
 
@@ -61,28 +62,31 @@ public class JTableProduct extends JTable implements Observer{
 	    	deleteMenuItem.addMouseListener(new MouseAdapter() {
 			    @Override
 			    public void mouseReleased(MouseEvent e) {
+			    	
+			    	if ( LoginController.getLoggedInUser().getUserRole().canDeleteProduct() ) {
 			 
-	                int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to delete this product?","Warning",JOptionPane.YES_NO_OPTION);
-	                
-	                if(dialogResult == JOptionPane.YES_OPTION){
-	                	
-	                	Product product=null;
-				    	
-				    	int idProduct = Integer.parseInt(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
-				    	
-				    	product = DaoFactory.getProductDao().getProduct(idProduct);
-
-				    	try{
-				    	
-				    		DaoFactory.getProductDao().delete(product);
-
-				    	}catch(Exception e1){
-				    		
-				    		
-				    		JOptionPane.showMessageDialog(null, "It's not possible to delete this product", "Error", JOptionPane.INFORMATION_MESSAGE);
-				    		
-				    	}
-	                }
+		                int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to delete this product?","Warning",JOptionPane.YES_NO_OPTION);
+		                
+		                if(dialogResult == JOptionPane.YES_OPTION){
+		                	
+		                	Product product=null;
+					    	
+					    	int idProduct = Integer.parseInt(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
+					    	
+					    	product = DaoFactory.getProductDao().getProduct(idProduct);
+	
+					    	try{
+					    	
+					    		DaoFactory.getProductDao().delete(product);
+	
+					    	}catch(Exception e1){
+					    		
+					    		
+					    		JOptionPane.showMessageDialog(null, "It's not possible to delete this product", "Error", JOptionPane.INFORMATION_MESSAGE);
+					    		
+					    	}
+		                }
+	                } else JOptionPane.showMessageDialog(null, "You don't have permission to do this action", "Success", JOptionPane.INFORMATION_MESSAGE);
 			    }
 			});
 	    	

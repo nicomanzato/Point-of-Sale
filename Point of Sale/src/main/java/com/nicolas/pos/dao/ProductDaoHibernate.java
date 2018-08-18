@@ -2,10 +2,15 @@ package com.nicolas.pos.dao;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import com.nicolas.pos.model.Order;
 import com.nicolas.pos.model.Product; 
 
 public class ProductDaoHibernate extends DaoHibernate implements ProductDao{
@@ -24,26 +29,28 @@ public class ProductDaoHibernate extends DaoHibernate implements ProductDao{
 	}
 	
 	public List<Product> getProducts(){
-		
-		Session session = this.getSession();
-		Transaction tx = null;
+	    
 		List<Product> products = null;
 		
 		try {
 		
-			tx = session.beginTransaction();
-			products = (List<Product>) session.createQuery("From Product").list();
-			tx.commit();
+			Session session = getSession();
+				
+			CriteriaQuery<Product> criteria = session.getCriteriaBuilder().createQuery( Product.class );
+			Root<Product> productRoot = criteria.from(Product.class);
+			criteria.select(productRoot);
 			
-		} catch (HibernateException e) {
-	         
-			if (tx!=null) tx.rollback();
-	         e.printStackTrace(); 
-	   
-		} finally {
-	         session.close(); 
-	    }
+			criteria.orderBy(session.getCriteriaBuilder().asc(productRoot.get("productId")));
+			criteria.where( session.getCriteriaBuilder().equal( productRoot.get("deleted"), false));
+			
+			products = session.createQuery( criteria ).list();
+			
+			session.close();
 	    
+		} catch( NoResultException e) {
+			
+		} 
+		
 	    return products;
 		
 	}
@@ -59,7 +66,8 @@ public class ProductDaoHibernate extends DaoHibernate implements ProductDao{
 
 	public void delete(Product product) {
 		
-		super.delete(product);
+		product.setDeleted(true);
+		super.update(product);
 	    
 		this.setChanged();
 	    this.notifyObservers();

@@ -14,10 +14,7 @@ import com.nicolas.pos.model.Order;
 
 public class OrderDaoHibernate extends DaoHibernate implements OrderDao{
 		
-	public OrderDaoHibernate(){
-		
-		
-	}
+	public OrderDaoHibernate(){}
 	
 	public void save(Order order) {
 		
@@ -51,7 +48,6 @@ public class OrderDaoHibernate extends DaoHibernate implements OrderDao{
 	public List<Order> getOrders() {
 		
 		List<Order> orders = null;
-		
 		int orderQuantity = 40;
 		
 		try {

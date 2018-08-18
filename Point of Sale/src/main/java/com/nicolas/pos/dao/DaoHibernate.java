@@ -49,7 +49,18 @@ public class DaoHibernate extends Observable{
 	
 	public void delete(Object obj) {
 		
-		// algo?
+		Session session = getSession();
+    	Transaction transaction = null;		
+		try {
+  	      transaction = session.beginTransaction();
+  	      session.delete(obj);
+  	      transaction.commit();
+  	    } catch (HibernateException e) {
+  	      transaction.rollback();
+  	      e.printStackTrace();
+  	    } finally {
+  	      session.close();
+  	    }
 		
 	}
 

@@ -9,7 +9,7 @@ public class GenerateData {
 		
 		int cantProducts = 4;
 		
-		int cantOrders = 50;
+		int cantOrders = 10;
 		
 		DaoFactory.getUserDao().save(GenerateUser.GenerateManager());
 		
@@ -25,8 +25,8 @@ public class GenerateData {
 		
 		for(int i=0; i < cantOrders; i++) {
 			
-			user.createOrder(GenerateOrder.GenerateRandomOrder());
-			
+			user.getUserRole().createOrder(GenerateOrder.GenerateRandomOrder(), user);
+					
 		}
 		
 		

@@ -15,6 +15,7 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import com.nicolas.pos.model.Order;
+import com.nicolas.pos.utilities.LoginController;
 import com.nicolas.pos.utilities.WindowsUtilities;
 import com.nicolas.pos.dao.DaoFactory;
 
@@ -55,19 +56,23 @@ public class JTableOrder extends JTable implements Observer{
 			    @Override
 			    public void mouseReleased(MouseEvent e) {
 			 
-	                int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to delete this order?","Warning",JOptionPane.YES_NO_OPTION);
+	                if (LoginController.getLoggedInUser().getUserRole().canDeleteOrder()) {
+			    	
+				    	int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to delete this order?","Warning",JOptionPane.YES_NO_OPTION);
+		                
+		                if(dialogResult == JOptionPane.YES_OPTION){
+		                	
+		                	Order order=null;
+					    	
+					    	Long idOrder = Long.valueOf(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
+					    	
+					    	order = DaoFactory.getOrderDao().getOrder(idOrder);
+	
+		                	LoginController.getLoggedInUser().getUserRole().deleteOrder(order, LoginController.getLoggedInUser());
+	
+		                }
 	                
-	                if(dialogResult == JOptionPane.YES_OPTION){
-	                	
-	                	Order order=null;
-				    	
-				    	Long idOrder = Long.valueOf(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
-				    	
-				    	order = DaoFactory.getOrderDao().getOrder(idOrder);
-
-	                	DaoFactory.getOrderDao().delete(order);
-
-	                }
+	                } else JOptionPane.showMessageDialog(null, "You don't have permission to do this action", "Success", JOptionPane.INFORMATION_MESSAGE);
 			    }
 			});
 	    	

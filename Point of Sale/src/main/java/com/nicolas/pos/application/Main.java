@@ -86,6 +86,21 @@ public class Main extends JFrame {
 			
 			JMenu mnSettings = new JMenu("Settings");
 			menuBar.add(mnSettings);
+			
+			JMenuItem mntmChangePasswordMenuItem = new JMenuItem("Change Password");
+			mntmChangePasswordMenuItem.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent arg0) {
+					
+					final JFrame frame = new ChangePasswordWindow();
+					
+					frame.setVisible(true);
+					
+				}
+			});
+			
+			mnSettings.add(mntmChangePasswordMenuItem);
+			
 			contentPane = new JPanel();
 			contentPane.setToolTipText("Point of Sale");
 			contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));

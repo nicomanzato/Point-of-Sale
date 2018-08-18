@@ -12,8 +12,9 @@ public class Product {
 	private Long productId;
 	private String name;
 	private Float price;
+	private boolean deleted; 
 	
-	public Product() { super(); }
+	public Product() { super(); deleted = false;}
 	
 	public Product(Long id, String name, float price) {
 		super();
@@ -27,7 +28,7 @@ public class Product {
 		super();
 		this.setName(name);
 		this.setPrice(price);
-		
+		deleted = false;
 	}
 	
 	@Id
@@ -58,6 +59,15 @@ public class Product {
 	
 	public void setPrice(Float price) {
 		this.price = price;
+	}
+	
+	@Column(name="PRODUCT_IS_DELETED", nullable=false)
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.deleted = isDeleted;
 	}
 
 	public String toString() {

@@ -29,14 +29,12 @@ public class Order extends Observable{
 	private Long orderId;
 	private Date date;
 	private List<OrderedProduct> products;
-	private User owner;
 	
 	
 	public Order() { 
 		
 		super(); 
 		this.setDate(new Date());
-		this.setOwner(LoginController.getLoggedInUser());
 		products =  new ArrayList<OrderedProduct>();
 				
 	}
@@ -46,13 +44,11 @@ public class Order extends Observable{
 		this.orderId = orderId;
 		this.date = date;
 		this.products = products;
-		this.setOwner(LoginController.getLoggedInUser());
 	}
 	
 	public Order(Date date, List<OrderedProduct> products) {
 		super();
 		this.date = date;
-		this.setOwner(LoginController.getLoggedInUser());
 		this.products = products;
 	}
 	
@@ -84,6 +80,8 @@ public class Order extends Observable{
 	public void setProducts(List<OrderedProduct> products) {
 		this.products = products;
 	}
+	
+	
 	
 	public boolean contains(Product product){
 		
@@ -158,15 +156,6 @@ public class Order extends Observable{
 			}
 		}
 		
-	}
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "USER_ID", nullable = false)
-	public User getOwner() {
-		return owner;
-	}
-
-	public void setOwner(User owner) {
-		this.owner = owner;
 	}
 
 	@Transient

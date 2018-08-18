@@ -1,7 +1,11 @@
 package com.nicolas.pos.model;
 
+import java.util.ArrayList;
+
 import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
+
+import com.nicolas.pos.dao.DaoFactory;
 
 @Entity  
 @Table(name = "USER_ROLES")  
@@ -11,15 +15,15 @@ public abstract class UserRole {
 
 	private Long id;
 	
-	public abstract boolean createProduct( Product product, User user );
-	public abstract boolean deleteProduct( Product product, User user );
-	public abstract boolean updateProduct( Product product, User user );
+	public abstract boolean canCreateProduct();
+	public abstract boolean canDeleteProduct();
+	public abstract boolean canUpdateProduct();
 	
-	public abstract boolean createOrder( Order order, User user );
-	public abstract boolean deleteOrder( Order order, User user );
-	public abstract boolean updateOrder( Order order, User user );
+	public abstract boolean canCreateOrder();
+	public abstract boolean canDeleteOrder();
+	public abstract boolean canUpdateOrder();
 	
-	public abstract boolean createUser( User user );
+	public abstract boolean canCreateUser();
 	
 	@Id
 	@GeneratedValue(generator="increment")
@@ -32,6 +36,96 @@ public abstract class UserRole {
 		this.id = id;
 	}
 	
+	public boolean createProduct(Product product) {
+		
+		if (this.canCreateProduct()) {
+			
+			DaoFactory.getProductDao().save(product);
+			
+			return true;
+		
+		}
+		
+		return false;
+	}
+
+	public boolean deleteProduct(Product product) {
+		
+		if (this.canDeleteProduct()) {
+			
+			DaoFactory.getProductDao().delete(product);
+			return false;
+			
+		} 
+			
+		return false;
+	}
+
+	public boolean updateProduct(Product product) {
+		
+		if (this.canUpdateProduct()) {
+			
+			DaoFactory.getProductDao().update(product);
+			return false;
+			
+		}
+		
+		return false;
+	}
+
+	public boolean createOrder(Order order, User user) {
+		
+		if (this.canCreateOrder()) {
+			
+			user.getOrders().add(order);
+			DaoFactory.getUserDao().update(user);
+		
+			return true;
+		}
+		
+		return false;
+	}
+
+	public boolean deleteOrder(Order order, User owner) {
+		
+		if ( this.canDeleteOrder()) {
+			
+			order.setProducts(new ArrayList<OrderedProduct>());
+			owner.getOrders().remove(order);
+			
+			DaoFactory.getOrderDao().update(order);
+			DaoFactory.getOrderDao().delete(order);
+			DaoFactory.getUserDao().update(owner);
+		
+			return true;
+		}
+		
+		return false;
+	}
+
+	public boolean updateOrder(Order order) {
+		
+		if (this.canUpdateOrder()) {
+			
+			DaoFactory.getOrderDao().update(order);
+			return true;
+		}
+		
+		return false;
+	}
+
+	public boolean createUser(User user) {
+		
+		if (this.canCreateUser()) {
+			
+			return true;
+			
+		}
+		
+		return false;
+		
+	}
 	
+
 	
 }

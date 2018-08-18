@@ -1,7 +1,6 @@
 package com.nicolas.pos.model;
 
 import javax.persistence.Entity;
-import com.nicolas.pos.dao.DaoFactory;
 import javax.persistence.*;
 
 @Entity  
@@ -9,46 +8,40 @@ import javax.persistence.*;
 public class CashierUserRole extends UserRole{
 
 	@Override
-	public boolean createProduct(Product product, User user) {
-
+	public boolean canCreateProduct() {
 		return false;
 	}
 
 	@Override
-	public boolean deleteProduct(Product product, User user) {
-
+	public boolean canDeleteProduct() {
 		return false;
 	}
 
 	@Override
-	public boolean updateProduct(Product product, User user) {
-
+	public boolean canUpdateProduct() {
 		return false;
 	}
 
 	@Override
-	public boolean createOrder(Order order, User user) {
+	public boolean canCreateOrder() {
+		return true;
+	}
 
-		DaoFactory.getOrderDao().save(order);
+	@Override
+	public boolean canDeleteOrder() {
 		return false;
 	}
 
 	@Override
-	public boolean deleteOrder(Order order, User user) {
-
+	public boolean canUpdateOrder() {
 		return false;
 	}
 
 	@Override
-	public boolean updateOrder(Order order, User user) {
-
+	public boolean canCreateUser() {
 		return false;
 	}
 
-	@Override
-	public boolean createUser(User user) {
-
-		return false;
-	}
+	
 
 }
