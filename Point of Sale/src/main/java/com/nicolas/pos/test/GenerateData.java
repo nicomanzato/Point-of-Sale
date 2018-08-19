@@ -25,7 +25,7 @@ public class GenerateData {
 		
 		for(int i=0; i < cantOrders; i++) {
 			
-			LoginController.getLoggedInUser().getUserRole().createOrder(GenerateOrder.GenerateRandomOrder());
+			LoginController.getLoggedInUser().createOrder(GenerateOrder.GenerateRandomOrder());
 						
 		}
 		

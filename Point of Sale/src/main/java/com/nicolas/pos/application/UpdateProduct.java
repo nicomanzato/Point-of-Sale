@@ -28,7 +28,7 @@ public class UpdateProduct extends JFrame {
 
 	public UpdateProduct(final Product updateProduct) {
 		
-		if (LoginController.getLoggedInUser().getUserRole().canUpdateProduct()) {
+		if (LoginController.getLoggedInUser().canUpdateProduct()) {
 		
 			setResizable(false);
 			setType(Type.POPUP);

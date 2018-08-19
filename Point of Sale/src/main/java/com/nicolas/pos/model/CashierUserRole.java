@@ -1,6 +1,5 @@
 package com.nicolas.pos.model;
 
-import javax.persistence.Entity;
 import javax.persistence.*;
 
 @Entity  
@@ -44,6 +43,12 @@ public class CashierUserRole extends UserRole{
 
 	@Override
 	public boolean canAccessAllOrders() {
+		return false;
+	}
+	
+	@Transient
+	@Override
+	public boolean isManager() {
 		return false;
 	}
 

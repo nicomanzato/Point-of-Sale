@@ -20,15 +20,15 @@ import com.nicolas.pos.utilities.LoginController;
 import com.nicolas.pos.utilities.WindowsUtilities;
 import com.nicolas.pos.dao.DaoFactory;
 
-public class JTableOrder extends JTable implements Observer{
+public class JTableManagerOrder extends JTable implements Observer{
 
 	private static final long serialVersionUID = -1266891863842442712L;
 
 	class PopUpMenu extends JPopupMenu {
 
 		private static final long serialVersionUID = 5413625012055643522L;
-		JTableOrder table;
-	    public PopUpMenu(final JTableOrder table){
+		JTableManagerOrder table;
+	    public PopUpMenu(final JTableManagerOrder table){
 	        
 	    	this.table = table;
 	    	JMenuItem updateMenuItem = new JMenuItem("Update");
@@ -58,10 +58,14 @@ public class JTableOrder extends JTable implements Observer{
 				    	int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to delete this order?","Warning",JOptionPane.YES_NO_OPTION);
 		                
 		                if(dialogResult == JOptionPane.YES_OPTION){
+		                	
+		                	Order order=null;
 					    	
 					    	Long idOrder = Long.valueOf(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
-						    	
-		                	LoginController.getLoggedInUser().deleteOrder(LoginController.getLoggedInUser().getOrderById(idOrder));
+					    	
+					    	order = DaoFactory.getOrderDao().getOrder(idOrder);
+	
+		                	LoginController.getLoggedInUser().deleteOrder(order);
 	
 		                }
 	                
@@ -73,7 +77,7 @@ public class JTableOrder extends JTable implements Observer{
 	    }
 	}
 	
-	public JTableOrder(){
+	public JTableManagerOrder(){
 		
 		this.setModel(createModel());
 		this.setEnabled(false);
@@ -82,15 +86,15 @@ public class JTableOrder extends JTable implements Observer{
 		    @Override
 		    public void mouseReleased(MouseEvent e) {
 		    	
-		    	JTableOrder table = ((JTableOrder)e.getSource());
+		    	JTableManagerOrder table = ((JTableManagerOrder)e.getSource());
 		    			    	
 		        if (WindowsUtilities.isRightClick(e) && e.getComponent() instanceof JTable ) {
 			    	
 		        	int r = table.rowAtPoint(e.getPoint());
 		            if (r >= 0 && r < table.getRowCount()) {
-		            	((JTableOrder)e.getSource()).setRowSelectionInterval(r, r);
+		            	((JTableManagerOrder)e.getSource()).setRowSelectionInterval(r, r);
 		            } else {
-		            	((JTableOrder)e.getSource()).clearSelection();
+		            	((JTableManagerOrder)e.getSource()).clearSelection();
 		            }
 		        	
 		            JPopupMenu popup = new PopUpMenu(table);
@@ -120,21 +124,11 @@ public class JTableOrder extends JTable implements Observer{
 		
 		this.setRowSorter(sorter);
 		
-		List<Order> orders;
-		
-		if (!LoginController.getLoggedInUser().isManager()) { 
-			
-			orders = LoginController.getLoggedInUser().getOrders(); 
-			
-		} else {
-			
-			orders = DaoFactory.getOrderDao().getOrders();
-			
-		}
+		List<Order> orders = DaoFactory.getOrderDao().getOrders();
 		
 		for (Order order : orders) {
-							
-			model.addRow(new Object[] { order.getOrderId() ,order.getDate(), "$"+order.getPrice() });			
+			
+			model.addRow(new Object[] { order.getOrderId() ,order.getDate(), "$"+order.getPrice() });
 			
 		}
 		
@@ -145,6 +139,5 @@ public class JTableOrder extends JTable implements Observer{
 	public void update(Observable o, Object arg) {
 		
 		this.setModel(this.createModel());
-		
 	}
 }

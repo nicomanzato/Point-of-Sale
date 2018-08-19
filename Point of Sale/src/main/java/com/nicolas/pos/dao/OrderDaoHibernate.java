@@ -36,7 +36,7 @@ public class OrderDaoHibernate extends DaoHibernate implements OrderDao{
 
 	public void delete(Order order){
 		
-		order.setCreatedByUser(null);
+		//order.setCreatedByUser(null);
 		super.update(order);
 	      
 	    this.setChanged();

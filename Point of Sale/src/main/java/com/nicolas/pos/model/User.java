@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -133,11 +134,71 @@ public class User {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "USER_ROLE_ID", nullable = false)
 	@Cascade(CascadeType.ALL)
-	public UserRole getUserRole() {
+	private UserRole getUserRole() {
 		return userRole;
 	}
 
-	public void setUserRole(UserRole userRole) {
+	private void setUserRole(UserRole userRole) {
 		this.userRole = userRole;
 	}
+	
+	
+	
+	public boolean createProduct(Product product) {
+		
+		return this.getUserRole().createProduct(product);
+		
+	}
+
+	public boolean deleteProduct(Product product) {
+		
+		return this.getUserRole().deleteProduct(product);
+	}
+
+	public boolean updateProduct(Product product) {
+		
+		return this.getUserRole().updateProduct(product);
+	}
+
+	public boolean createOrder(Order order) {
+		
+		return this.getUserRole().createOrder(order);
+	}
+
+	public boolean deleteOrder(Order order) {
+		
+		return this.getUserRole().deleteOrder(order);
+	}
+
+	public boolean updateOrder(Order order) {
+		
+		return this.getUserRole().updateOrder(order);
+	}
+	
+	public boolean createUser(User user) {
+		
+		return this.getUserRole().createUser(user);
+		
+	}
+	
+	@Transient
+	public boolean isManager() {
+		
+		return this.getUserRole().isManager();
+		
+	}
+	
+	public boolean canCreateProduct() { return this.getUserRole().canCreateProduct(); }
+	public boolean canDeleteProduct() { return this.getUserRole().canDeleteProduct(); }
+	public boolean canUpdateProduct() { return this.getUserRole().canUpdateProduct(); }
+	
+	public boolean canCreateOrder() { return this.getUserRole().canCreateOrder(); }
+	public boolean canDeleteOrder() { return this.getUserRole().canDeleteOrder(); }
+	public boolean canUpdateOrder() { return this.getUserRole().canUpdateOrder(); }
+	public boolean canAccessAllOrders() { return this.getUserRole().canAccessAllOrders(); }
+	
+	public boolean canCreateUser() { return this.getUserRole().canCreateUser(); }
+	
+	
+	
 }

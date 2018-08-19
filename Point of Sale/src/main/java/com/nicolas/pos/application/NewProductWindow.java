@@ -34,7 +34,7 @@ public class NewProductWindow extends JFrame {
 	 */
 	public NewProductWindow() {
 		
-		if (LoginController.getLoggedInUser().getUserRole().canCreateProduct()) {
+		if (LoginController.getLoggedInUser().canCreateProduct()) {
 		
 			setResizable(false);
 			setType(Type.POPUP);

@@ -63,7 +63,7 @@ public class JTableProduct extends JTable implements Observer{
 			    @Override
 			    public void mouseReleased(MouseEvent e) {
 			    	
-			    	if ( LoginController.getLoggedInUser().getUserRole().canDeleteProduct() ) {
+			    	if ( LoginController.getLoggedInUser().canDeleteProduct() ) {
 			 
 		                int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to delete this product?","Warning",JOptionPane.YES_NO_OPTION);
 		                
@@ -77,7 +77,7 @@ public class JTableProduct extends JTable implements Observer{
 	
 					    	try{
 					    	
-					    		LoginController.getLoggedInUser().getUserRole().deleteProduct(product);
+					    		LoginController.getLoggedInUser().deleteProduct(product);
 	
 					    	}catch(Exception e1){
 					    		

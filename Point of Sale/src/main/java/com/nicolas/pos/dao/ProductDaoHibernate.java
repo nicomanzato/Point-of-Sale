@@ -10,7 +10,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import com.nicolas.pos.model.Order;
 import com.nicolas.pos.model.Product; 
 
 public class ProductDaoHibernate extends DaoHibernate implements ProductDao{

@@ -26,6 +26,9 @@ public abstract class UserRole {
 	
 	public abstract boolean canCreateUser();
 	
+	@Transient
+	public abstract boolean isManager();
+	
 	@Id
 	@GeneratedValue(generator="increment")
 	@GenericGenerator(name="increment", strategy = "increment")
@@ -78,7 +81,8 @@ public abstract class UserRole {
 		
 		if (this.canCreateOrder()) {
 			
-			LoginController.getLoggedInUser().addOrder(order);
+			if ( !LoginController.getLoggedInUser().getOrders().contains(order) ) LoginController.getLoggedInUser().addOrder(order);
+			
 			order.setCreatedByUser(LoginController.getLoggedInUser());
 			DaoFactory.getOrderDao().save(order);
 					

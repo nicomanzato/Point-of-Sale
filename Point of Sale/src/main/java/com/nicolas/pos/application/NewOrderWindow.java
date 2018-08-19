@@ -42,7 +42,7 @@ public class NewOrderWindow extends JFrame {
 	 */
 	public NewOrderWindow() {
 		
-		if (LoginController.getLoggedInUser().getUserRole().canCreateOrder()) {
+		if (LoginController.getLoggedInUser().canCreateOrder()) {
 		
 			setResizable(false);
 			this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE );
@@ -91,7 +91,7 @@ public class NewOrderWindow extends JFrame {
 						
 					}else{
 						
-						LoginController.getLoggedInUser().getUserRole().createOrder(newOrder);
+						LoginController.getLoggedInUser().createOrder(newOrder);
 						
 						JOptionPane.showMessageDialog(null, "Order created!", "Success", JOptionPane.INFORMATION_MESSAGE);
 						

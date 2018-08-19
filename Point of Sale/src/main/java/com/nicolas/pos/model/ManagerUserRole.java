@@ -45,6 +45,12 @@ public class ManagerUserRole extends UserRole{
 	public boolean canAccessAllOrders() {
 		return true;
 	}
+	
+	@Transient
+	@Override
+	public boolean isManager() {
+		return true;
+	}
 
 	
 }

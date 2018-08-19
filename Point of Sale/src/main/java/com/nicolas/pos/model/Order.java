@@ -81,7 +81,7 @@ public class Order extends Observable{
 	}
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "CREATED_BY_USER_ID", nullable = false)
+	@JoinColumn(name = "CREATED_BY_USER_ID")
 	public User getCreatedByUser() {
 		return createdByUser;
 	}

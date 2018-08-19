@@ -30,6 +30,23 @@ public class DaoHibernate extends Observable{
 		
 	}
 	
+	public void merge(Object obj) {
+		
+		Session session = getSession();
+    	Transaction transaction = null;		
+		try {
+  	      transaction = session.beginTransaction();
+  	      session.merge(obj);
+  	      transaction.commit();
+  	    } catch (HibernateException e) {
+  	      transaction.rollback();
+  	      e.printStackTrace();
+  	    } finally {
+  	      session.close();
+  	    }
+		
+	}
+	
 	public void update(Object obj) {
 		
 		Session session = getSession();
@@ -44,6 +61,9 @@ public class DaoHibernate extends Observable{
   	    } catch (HibernateException e) {
   	      transaction.rollback();
   	      e.printStackTrace();
+  	      
+  	      this.merge(obj);
+  	      
   	    } catch (javax.persistence.EntityNotFoundException e) {
   	    	e.printStackTrace();
   	    }

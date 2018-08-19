@@ -28,6 +28,12 @@ public class UserDaoHibernate extends DaoHibernate implements UserDao {
 		this.setChanged();
 		this.notifyObservers();		
 	}
+	
+	public void merge(User user) {
+		
+		super.merge(user);
+		
+	}
 
 	public void delete(User user) {
 

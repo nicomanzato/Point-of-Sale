@@ -40,7 +40,7 @@ public class UpdateOrder extends JFrame {
 	 * Create the frame.
 	 */
 	public UpdateOrder(Long updateOrderId) {
-		if (LoginController.getLoggedInUser().getUserRole().canUpdateOrder()) {
+		if (LoginController.getLoggedInUser().canUpdateOrder()) {
 			
 			updateOrder = LoginController.getLoggedInUser().getOrderById(updateOrderId);
 			
@@ -90,7 +90,7 @@ public class UpdateOrder extends JFrame {
 						
 					}else{
 						
-						LoginController.getLoggedInUser().getUserRole().updateOrder(updateOrder);
+						LoginController.getLoggedInUser().updateOrder(updateOrder);
 						
 						JOptionPane.showMessageDialog(null, "Order updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
 						
