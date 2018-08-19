@@ -11,6 +11,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.nicolas.pos.model.User;
+import com.nicolas.pos.model.UserRole;
 
 public class UserDaoHibernate extends DaoHibernate implements UserDao {
 
@@ -113,6 +114,30 @@ public class UserDaoHibernate extends DaoHibernate implements UserDao {
 		} 
 		
 	    return user;
+	}
+
+	public UserRole getUserRole(int role) {
+
+		UserRole userRole = null;
+		
+		try {
+		
+			Session session = getSession();
+				
+			CriteriaQuery<UserRole> criteria = session.getCriteriaBuilder().createQuery( UserRole.class );
+			Root<UserRole> userRoleRoot = criteria.from(UserRole.class);
+			criteria.select(userRoleRoot);
+			criteria.where( session.getCriteriaBuilder().equal( userRoleRoot.get("id") , role) );
+			
+			userRole = session.createQuery( criteria ).getSingleResult();
+			
+			session.close();
+	    
+		} catch( NoResultException e) {
+			
+		} 
+		
+	    return userRole;
 	}
 
 }

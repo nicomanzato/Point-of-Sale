@@ -54,35 +54,43 @@ public class MainWindow extends JFrame {
 			JMenu mnNewMenu = new JMenu("Products");
 			menuBar.add(mnNewMenu);
 			
-			JMenuItem mntmCreateProduct = new JMenuItem("Create Product");
-			mntmCreateProduct.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mousePressed(MouseEvent e) {
-					
-					JFrame newProductFrame = new NewProductWindow();
-					
-					newProductFrame.setVisible(true);
-					
-				}
-			});
+			if (LoginController.getLoggedInUser().canCreateProduct()) {
 			
-			mnNewMenu.add(mntmCreateProduct);
+				JMenuItem mntmCreateProduct = new JMenuItem("Create Product");
+				mntmCreateProduct.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mousePressed(MouseEvent e) {
+						
+						JFrame newProductFrame = new NewProductWindow();
+						
+						newProductFrame.setVisible(true);
+						
+					}
+				});
+				
+				mnNewMenu.add(mntmCreateProduct);
+			
+			}
 			
 			JMenu mnOrders = new JMenu("Orders");
 			menuBar.add(mnOrders);
 			
-			JMenuItem mntmNewMenuItem = new JMenuItem("Create Order");
-			mntmNewMenuItem.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mousePressed(MouseEvent arg0) {
-					
-					final JFrame frame = new NewOrderWindow();
-					
-					frame.setVisible(true);
-					
-				}
-			});
-			mnOrders.add(mntmNewMenuItem);
+			if (LoginController.getLoggedInUser().canCreateOrder()) {
+			
+				JMenuItem mntmNewMenuItem = new JMenuItem("Create Order");
+				mntmNewMenuItem.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mousePressed(MouseEvent arg0) {
+						
+						final JFrame frame = new NewOrderWindow();
+						
+						frame.setVisible(true);
+						
+					}
+				});
+				mnOrders.add(mntmNewMenuItem);
+			
+			}
 			
 			JMenu mnSettings = new JMenu("Settings");
 			menuBar.add(mnSettings);
@@ -101,20 +109,23 @@ public class MainWindow extends JFrame {
 			
 			mnSettings.add(mntmChangePasswordMenuItem);
 
+			if (LoginController.getLoggedInUser().canCreateUser()) {
 			
-			JMenuItem mntmNewUserMenuItem = new JMenuItem("Create new User");
-			mntmNewUserMenuItem.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mousePressed(MouseEvent arg0) {
-					
-					final JFrame frame = new NewUserWindow();
-					
-					frame.setVisible(true);
-					
-				}
-			});
-			
-			mnSettings.add(mntmNewUserMenuItem);
+				JMenuItem mntmNewUserMenuItem = new JMenuItem("Create new Cashier");
+				mntmNewUserMenuItem.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mousePressed(MouseEvent arg0) {
+						
+						final JFrame frame = new NewCashierWindow();
+						
+						frame.setVisible(true);
+						
+					}
+				});
+				
+				mnSettings.add(mntmNewUserMenuItem);
+				
+			}
 			
 			contentPane = new JPanel();
 			contentPane.setToolTipText("Point of Sale");

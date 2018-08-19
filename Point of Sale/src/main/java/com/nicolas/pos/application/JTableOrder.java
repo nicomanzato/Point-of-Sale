@@ -31,45 +31,54 @@ public class JTableOrder extends JTable implements Observer{
 	    public PopUpMenu(final JTableOrder table){
 	        
 	    	this.table = table;
-	    	JMenuItem updateMenuItem = new JMenuItem("Update");
-	        
-	    	updateMenuItem.addMouseListener(new MouseAdapter() {
-			    @Override
-			    public void mouseReleased(MouseEvent e) {
-			    	
-			    	Long idOrder = Long.valueOf(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
-			    	
-			    	final JFrame frame = new UpdateOrder(idOrder);
-					
-					frame.setVisible(true);
-			    }
-			});
 	    	
-	    	add(updateMenuItem);
+	    	if (LoginController.getLoggedInUser().canUpdateOrder()) {
+	    		
+		    	JMenuItem updateMenuItem = new JMenuItem("Update");
+		        
+		    	updateMenuItem.addMouseListener(new MouseAdapter() {
+				    @Override
+				    public void mouseReleased(MouseEvent e) {
+				    	
+				    	Long idOrder = Long.valueOf(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
+				    	
+				    	final JFrame frame = new UpdateOrder(idOrder);
+						
+						frame.setVisible(true);
+				    }
+				});
+		    	
+		    	add(updateMenuItem);
+		    	
+	    	}
 	        
-	    	JMenuItem deleteMenuItem = new JMenuItem("Delete");
+	    	if (LoginController.getLoggedInUser().canDeleteOrder()) {
 	    	
-	    	deleteMenuItem.addMouseListener(new MouseAdapter() {
-			    @Override
-			    public void mouseReleased(MouseEvent e) {
-			 
-	                if (LoginController.getLoggedInUser().canDeleteOrder()) {
-			    	
-				    	int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to delete this order?","Warning",JOptionPane.YES_NO_OPTION);
-		                
-		                if(dialogResult == JOptionPane.YES_OPTION){
-					    	
-					    	Long idOrder = Long.valueOf(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
+		    	JMenuItem deleteMenuItem = new JMenuItem("Delete");
+		    	
+		    	deleteMenuItem.addMouseListener(new MouseAdapter() {
+				    @Override
+				    public void mouseReleased(MouseEvent e) {
+				 
+		                if (LoginController.getLoggedInUser().canDeleteOrder()) {
+				    	
+					    	int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to delete this order?","Warning",JOptionPane.YES_NO_OPTION);
+			                
+			                if(dialogResult == JOptionPane.YES_OPTION){
 						    	
-		                	LoginController.getLoggedInUser().deleteOrder(LoginController.getLoggedInUser().getOrderById(idOrder));
-	
-		                }
-	                
-	                } else JOptionPane.showMessageDialog(null, "You don't have permission to do this action", "Success", JOptionPane.INFORMATION_MESSAGE);
-			    }
-			});
-	    	
-	        add(deleteMenuItem);
+						    	Long idOrder = Long.valueOf(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
+							    	
+			                	LoginController.getLoggedInUser().deleteOrder(LoginController.getLoggedInUser().getOrderById(idOrder));
+		
+			                }
+		                
+		                } else JOptionPane.showMessageDialog(null, "You don't have permission to do this action", "Success", JOptionPane.INFORMATION_MESSAGE);
+				    }
+				});
+		    	
+		        add(deleteMenuItem);
+		       
+	    	}
 	    }
 	}
 	

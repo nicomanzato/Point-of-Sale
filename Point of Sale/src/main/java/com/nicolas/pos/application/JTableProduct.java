@@ -36,61 +36,70 @@ public class JTableProduct extends JTable implements Observer{
 	    public PopUpMenu(final JTableProduct table){
 	        
 	    	this.table = table;
-	    	JMenuItem updateMenuItem = new JMenuItem("Update");
-	        
-	    	updateMenuItem.addMouseListener(new MouseAdapter() {
-			    @Override
-			    public void mouseReleased(MouseEvent e) {
-			    	
-			    	
-			    	Product product=null;
-			    	
-			    	int idProduct = Integer.parseInt(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
-			    			
-			    	product = DaoFactory.getProductDao().getProduct(idProduct);
-			    	
-			    	final JFrame frame = new UpdateProduct(product);
-					
-					frame.setVisible(true);
-			    }
-			});
 	    	
-	    	add(updateMenuItem);
+	    	if (LoginController.getLoggedInUser().canUpdateProduct()) {
+	    	
+		    	JMenuItem updateMenuItem = new JMenuItem("Update");
+		        
+		    	updateMenuItem.addMouseListener(new MouseAdapter() {
+				    @Override
+				    public void mouseReleased(MouseEvent e) {
+				    	
+				    	
+				    	Product product=null;
+				    	
+				    	int idProduct = Integer.parseInt(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
+				    			
+				    	product = DaoFactory.getProductDao().getProduct(idProduct);
+				    	
+				    	final JFrame frame = new UpdateProduct(product);
+						
+						frame.setVisible(true);
+				    }
+				});
+		    	
+		    	add(updateMenuItem);
+	    	
+	    	}
+	    	
+	    	if (LoginController.getLoggedInUser().canDeleteProduct()) {
 	        
 	    	JMenuItem deleteMenuItem = new JMenuItem("Delete");
 	    	
-	    	deleteMenuItem.addMouseListener(new MouseAdapter() {
-			    @Override
-			    public void mouseReleased(MouseEvent e) {
-			    	
-			    	if ( LoginController.getLoggedInUser().canDeleteProduct() ) {
-			 
-		                int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to delete this product?","Warning",JOptionPane.YES_NO_OPTION);
-		                
-		                if(dialogResult == JOptionPane.YES_OPTION){
-		                	
-		                	Product product=null;
-					    	
-					    	int idProduct = Integer.parseInt(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
-					    	
-					    	product = DaoFactory.getProductDao().getProduct(idProduct);
-	
-					    	try{
-					    	
-					    		LoginController.getLoggedInUser().deleteProduct(product);
-	
-					    	}catch(Exception e1){
-					    		
-					    		
-					    		JOptionPane.showMessageDialog(null, "It's not possible to delete this product", "Error", JOptionPane.INFORMATION_MESSAGE);
-					    		
-					    	}
-		                }
-	                } else JOptionPane.showMessageDialog(null, "You don't have permission to do this action", "Success", JOptionPane.INFORMATION_MESSAGE);
-			    }
-			});
-	    	
-	        add(deleteMenuItem);
+		    	deleteMenuItem.addMouseListener(new MouseAdapter() {
+				    @Override
+				    public void mouseReleased(MouseEvent e) {
+				    	
+				    	if ( LoginController.getLoggedInUser().canDeleteProduct() ) {
+				 
+			                int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to delete this product?","Warning",JOptionPane.YES_NO_OPTION);
+			                
+			                if(dialogResult == JOptionPane.YES_OPTION){
+			                	
+			                	Product product=null;
+						    	
+						    	int idProduct = Integer.parseInt(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
+						    	
+						    	product = DaoFactory.getProductDao().getProduct(idProduct);
+		
+						    	try{
+						    	
+						    		LoginController.getLoggedInUser().deleteProduct(product);
+		
+						    	}catch(Exception e1){
+						    		
+						    		
+						    		JOptionPane.showMessageDialog(null, "It's not possible to delete this product", "Error", JOptionPane.INFORMATION_MESSAGE);
+						    		
+						    	}
+			                }
+		                } else JOptionPane.showMessageDialog(null, "You don't have permission to do this action", "Success", JOptionPane.INFORMATION_MESSAGE);
+				    }
+				});
+		    	
+		        add(deleteMenuItem);
+		        
+	    	}
 	    }
 	}
 	

@@ -20,7 +20,7 @@ import com.nicolas.pos.model.User;
 import com.nicolas.pos.utilities.LoginController;
 import com.nicolas.pos.utilities.WindowsUtilities;
 
-public class NewUserWindow extends JFrame{
+public class NewCashierWindow extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -32,7 +32,7 @@ public class NewUserWindow extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	public NewUserWindow() {
+	public NewCashierWindow() {
 		
 		if (LoginController.getLoggedInUser().canCreateProduct()) {
 			setResizable(false);
@@ -47,7 +47,7 @@ public class NewUserWindow extends JFrame{
 			
 			JLabel lblNombre = new JLabel("Username");
 			
-			usernameTextField = new JPasswordField();
+			usernameTextField = new JTextField();
 			usernameTextField.setColumns(10);
 			
 			JLabel lblPrecio = new JLabel("Password");
@@ -60,24 +60,21 @@ public class NewUserWindow extends JFrame{
 			repeatPasswordField = new JPasswordField();
 			repeatPasswordField.setColumns(10);
 			
-			JButton btnChangePassword = new JButton("Create User");
-			btnChangePassword.addActionListener(new ActionListener() {
+			JButton btnCreateCashier = new JButton("Create Cashier");
+			btnCreateCashier.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 									
 					String username = usernameTextField.getText();
 					String password  = passwordTextField.getText();
 					String repeatPassword = repeatPasswordField.getText();
-									
+														
 					if (password.equals(repeatPassword)) {
 						
-						if (LoginController.checkUsernameInUse(username)) {
+						if (!LoginController.checkUsernameInUse(username)) {
+														
+							LoginController.getLoggedInUser().createCashier(username, password);
 							
-							CashierUserRole userRole = new CashierUserRole();
-							User user = new User(username, password, userRole);
-							
-							LoginController.getLoggedInUser().createUser(user);
-							
-							JOptionPane.showMessageDialog(null, "The user " + username + " has been created", "Success", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "Cashier " + username + " has been created", "Success", JOptionPane.INFORMATION_MESSAGE);
 							
 							dispose();
 							
@@ -99,7 +96,7 @@ public class NewUserWindow extends JFrame{
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 							.addGroup(gl_contentPane.createSequentialGroup()
 								.addGap(73)
-								.addComponent(btnChangePassword, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
+								.addComponent(btnCreateCashier, GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
 								.addGap(80))
 							.addGroup(gl_contentPane.createSequentialGroup()
 								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -133,13 +130,13 @@ public class NewUserWindow extends JFrame{
 							.addComponent(repeatPasswordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addComponent(label))
 						.addPreferredGap(ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-						.addComponent(btnChangePassword)
+						.addComponent(btnCreateCashier)
 						.addContainerGap())
 			);
 			contentPane.setLayout(gl_contentPane);
 		} else {
 			
-			JOptionPane.showMessageDialog(null, "You don't have permission to do this action", "Success", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "You don't have permission to do this action", "Error", JOptionPane.INFORMATION_MESSAGE);
 			
 		}
 	}

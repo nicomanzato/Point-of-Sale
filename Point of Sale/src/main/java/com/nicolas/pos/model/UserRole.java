@@ -12,6 +12,9 @@ import com.nicolas.pos.utilities.LoginController;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="USER_ROLE_NAME", discriminatorType = DiscriminatorType.STRING) 
 public abstract class UserRole {
+	
+	static final int Manager = 1;
+	static final int Cashier = 2;
 
 	private Long id;
 	

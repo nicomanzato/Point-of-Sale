@@ -42,11 +42,11 @@ public class LoginController {
 		
 		for (User user : DaoFactory.getUserDao().getUsers()) {
 			
-			if ( user.getUsername() == username ) return false;
+			if ( user.getUsername() == username ) return true;
 			
 		}
 		
-		return true;
+		return false;
 		
 	}
 	

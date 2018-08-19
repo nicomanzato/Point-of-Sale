@@ -15,7 +15,7 @@ public class GenerateUser {
 	public static User GenerateManager() {
 		
 		ManagerUserRole userRole = new ManagerUserRole();
-		User user = new User("nicolas", "nicolas", userRole);
+		User user = new User("admin", "admin", userRole);
 		
 		return user;
 		

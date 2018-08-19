@@ -175,11 +175,29 @@ public class User {
 		return this.getUserRole().updateOrder(order);
 	}
 	
-	public boolean createUser(User user) {
+	public boolean createCashier(String username, String password) {
+		
+		if (!LoginController.checkUsernameInUse(username)) {
+		
+			User user = new User (username, password, DaoFactory.getUserDao().getUserRole(UserRole.Cashier));
+		
+			return this.getUserRole().createUser(user);
+		
+		}
+		
+		return false;
+		
+	}
+	
+	public boolean createManager(String username, String password) {
+		
+		User user = new User (username, password, DaoFactory.getUserDao().getUserRole(UserRole.Manager));
 		
 		return this.getUserRole().createUser(user);
 		
 	}
+	
+	
 	
 	@Transient
 	public boolean isManager() {
@@ -189,12 +207,17 @@ public class User {
 	}
 	
 	public boolean canCreateProduct() { return this.getUserRole().canCreateProduct(); }
+	
 	public boolean canDeleteProduct() { return this.getUserRole().canDeleteProduct(); }
+	
 	public boolean canUpdateProduct() { return this.getUserRole().canUpdateProduct(); }
 	
 	public boolean canCreateOrder() { return this.getUserRole().canCreateOrder(); }
+	
 	public boolean canDeleteOrder() { return this.getUserRole().canDeleteOrder(); }
+	
 	public boolean canUpdateOrder() { return this.getUserRole().canUpdateOrder(); }
+	
 	public boolean canAccessAllOrders() { return this.getUserRole().canAccessAllOrders(); }
 	
 	public boolean canCreateUser() { return this.getUserRole().canCreateUser(); }
