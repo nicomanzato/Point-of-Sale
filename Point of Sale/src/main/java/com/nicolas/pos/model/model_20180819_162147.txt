@@ -1,0 +1,12 @@
+WARNING - 16:21:47: First conversion pass
+ERROR - 16:21:47: java.io.FileNotFoundException: /Point of Sale/src/main/java/com/nicolas/pos/model/CashierUserRole.java (No such file or directory)
+ERROR - 16:21:47: java.io.FileNotFoundException: /Point of Sale/src/main/java/com/nicolas/pos/model/CashierUserRole.java (No such file or directory)
+WARNING - 16:22:23: Convert com.nicolas.pos.model
+WARNING - 16:22:23: First conversion pass
+ERROR - 16:22:23: java.io.FileNotFoundException: /Point of Sale/src/main/java/com/nicolas/pos/model/CashierUserRole.java (No such file or directory)
+ERROR - 16:22:23: java.io.FileNotFoundException: /Point of Sale/src/main/java/com/nicolas/pos/model/CashierUserRole.java (No such file or directory)
+WARNING - 16:22:32: Convert com.nicolas.pos.model
+WARNING - 16:22:32: First conversion pass
+ERROR - 16:22:32: java.net.MalformedURLException: unknown protocol: pathmap
+WARNING - 16:26:25: Convert Point of Sale
+ERROR - 16:26:25: java.net.MalformedURLException: unknown protocol: pathmap

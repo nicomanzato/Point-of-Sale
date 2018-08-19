@@ -84,21 +84,6 @@ public class MainWindow extends JFrame {
 			});
 			mnOrders.add(mntmNewMenuItem);
 			
-			JMenuItem mntmListAllOrdersItem = new JMenuItem("List all Orders");
-			mntmListAllOrdersItem.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mousePressed(MouseEvent arg0) {
-					
-					final JFrame frame = new ListAllOrdersWindow();
-					
-					frame.setVisible(true);
-					
-				}
-			});
-			mnOrders.add(mntmListAllOrdersItem);
-			
-			
-			
 			JMenu mnSettings = new JMenu("Settings");
 			menuBar.add(mnSettings);
 			
