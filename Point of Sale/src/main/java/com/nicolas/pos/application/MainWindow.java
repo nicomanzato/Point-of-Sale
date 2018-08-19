@@ -26,7 +26,7 @@ import com.nicolas.pos.model.User;
 import com.nicolas.pos.utilities.LoginController;
 import com.nicolas.pos.utilities.WindowsUtilities;
 
-public class Main extends JFrame {
+public class MainWindow extends JFrame {
 
 	/**
 	 * 
@@ -37,7 +37,7 @@ public class Main extends JFrame {
 	private JTable productTable;
 	private User userLoggedIn;
 
-	public Main() {
+	public MainWindow() {
 		
 		userLoggedIn = LoginController.getLoggedInUser();
 		
@@ -59,7 +59,7 @@ public class Main extends JFrame {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					
-					JFrame newProductFrame = new NewProduct();
+					JFrame newProductFrame = new NewProductWindow();
 					
 					newProductFrame.setVisible(true);
 					
@@ -76,13 +76,28 @@ public class Main extends JFrame {
 				@Override
 				public void mousePressed(MouseEvent arg0) {
 					
-					final JFrame frame = new NewOrder();
+					final JFrame frame = new NewOrderWindow();
 					
 					frame.setVisible(true);
 					
 				}
 			});
 			mnOrders.add(mntmNewMenuItem);
+			
+			JMenuItem mntmListAllOrdersItem = new JMenuItem("List all Orders");
+			mntmListAllOrdersItem.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent arg0) {
+					
+					final JFrame frame = new ListAllOrdersWindow();
+					
+					frame.setVisible(true);
+					
+				}
+			});
+			mnOrders.add(mntmListAllOrdersItem);
+			
+			
 			
 			JMenu mnSettings = new JMenu("Settings");
 			menuBar.add(mnSettings);
@@ -100,6 +115,21 @@ public class Main extends JFrame {
 			});
 			
 			mnSettings.add(mntmChangePasswordMenuItem);
+
+			
+			JMenuItem mntmNewUserMenuItem = new JMenuItem("Create new User");
+			mntmNewUserMenuItem.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mousePressed(MouseEvent arg0) {
+					
+					final JFrame frame = new NewUserWindow();
+					
+					frame.setVisible(true);
+					
+				}
+			});
+			
+			mnSettings.add(mntmNewUserMenuItem);
 			
 			contentPane = new JPanel();
 			contentPane.setToolTipText("Point of Sale");
@@ -172,7 +202,7 @@ public class Main extends JFrame {
 				@Override
 				public void mousePressed(MouseEvent e) {
 					
-					JFrame newProductFrame = new NewProduct();
+					JFrame newProductFrame = new NewProductWindow();
 					
 					newProductFrame.setVisible(true);
 					
@@ -213,7 +243,7 @@ public class Main extends JFrame {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					
-					final JFrame frame = new NewOrder();
+					final JFrame frame = new NewOrderWindow();
 					
 					frame.setVisible(true);
 					

@@ -41,7 +41,7 @@ public class OrderedProduct {
 		this.productOrderedId = productOrderedId;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PRODUCT_ID", nullable = false)
 	public Product getProduct() {
 		return product;

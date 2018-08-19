@@ -34,16 +34,21 @@ public class DaoHibernate extends Observable{
 		
 		Session session = getSession();
     	Transaction transaction = null;		
+    	
 		try {
+			
   	      transaction = session.beginTransaction();
-  	      session.merge(obj);
+  	      session.update(obj);  
   	      transaction.commit();
+  	      
   	    } catch (HibernateException e) {
   	      transaction.rollback();
   	      e.printStackTrace();
-  	    } finally {
-  	      session.close();
+  	    } catch (javax.persistence.EntityNotFoundException e) {
+  	    	e.printStackTrace();
   	    }
+		
+		session.close();
 		
 	}
 	

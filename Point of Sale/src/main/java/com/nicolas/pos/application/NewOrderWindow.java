@@ -9,7 +9,6 @@ import javax.swing.border.EmptyBorder;
 
 import com.nicolas.pos.model.Order;
 import com.nicolas.pos.model.Product;
-import com.nicolas.pos.test.GenerateOrder;
 import com.nicolas.pos.utilities.LoginController;
 import com.nicolas.pos.utilities.WindowsUtilities;
 import com.nicolas.pos.dao.DaoFactory;
@@ -31,7 +30,7 @@ import java.awt.Color;
 import javax.swing.border.LineBorder;
 import java.awt.SystemColor;
 
-public class NewOrder extends JFrame {
+public class NewOrderWindow extends JFrame {
 
 	private static final long serialVersionUID = 1161638875885356327L;
 	private JPanel contentPane;
@@ -41,7 +40,7 @@ public class NewOrder extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewOrder() {
+	public NewOrderWindow() {
 		
 		if (LoginController.getLoggedInUser().getUserRole().canCreateOrder()) {
 		
@@ -92,7 +91,7 @@ public class NewOrder extends JFrame {
 						
 					}else{
 						
-						LoginController.getLoggedInUser().getUserRole().createOrder(GenerateOrder.GenerateRandomOrder());
+						LoginController.getLoggedInUser().getUserRole().createOrder(newOrder);
 						
 						JOptionPane.showMessageDialog(null, "Order created!", "Success", JOptionPane.INFORMATION_MESSAGE);
 						

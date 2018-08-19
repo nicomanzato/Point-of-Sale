@@ -34,12 +34,16 @@ public class UpdateOrder extends JFrame {
 	private static final long serialVersionUID = -3087332566331177772L;
 	private JPanel contentPane;
 	private JTable tableOrderedProducts;
+	private Order updateOrder;
 
 	/**
 	 * Create the frame.
 	 */
-	public UpdateOrder(final Order updateOrder) {
+	public UpdateOrder(Long updateOrderId) {
 		if (LoginController.getLoggedInUser().getUserRole().canUpdateOrder()) {
+			
+			updateOrder = LoginController.getLoggedInUser().getOrderById(updateOrderId);
+			
 			setResizable(false);
 			this.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE );
 			setBounds(100, 100, 860, 500);
@@ -86,7 +90,7 @@ public class UpdateOrder extends JFrame {
 						
 					}else{
 						
-						DaoFactory.getOrderDao().update(updateOrder);
+						LoginController.getLoggedInUser().getUserRole().updateOrder(updateOrder);
 						
 						JOptionPane.showMessageDialog(null, "Order updated!", "Success", JOptionPane.INFORMATION_MESSAGE);
 						

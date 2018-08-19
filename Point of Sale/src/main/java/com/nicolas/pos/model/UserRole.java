@@ -1,6 +1,5 @@
 package com.nicolas.pos.model;
 
-import java.util.ArrayList;
 
 import javax.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -23,6 +22,7 @@ public abstract class UserRole {
 	public abstract boolean canCreateOrder();
 	public abstract boolean canDeleteOrder();
 	public abstract boolean canUpdateOrder();
+	public abstract boolean canAccessAllOrders();
 	
 	public abstract boolean canCreateUser();
 	
@@ -78,25 +78,25 @@ public abstract class UserRole {
 		
 		if (this.canCreateOrder()) {
 			
-			LoginController.getLoggedInUser().getOrders().add(order);
+			LoginController.getLoggedInUser().addOrder(order);
+			order.setCreatedByUser(LoginController.getLoggedInUser());
 			DaoFactory.getOrderDao().save(order);
-		
+					
 			return true;
 		}
 		
 		return false;
 	}
 
-	public boolean deleteOrder(Order order, User owner) {
+	public boolean deleteOrder(Order order) {
 		
 		if ( this.canDeleteOrder()) {
 			
-			//owner.getOrders().remove(order);
-			//order.setProducts(new ArrayList<OrderedProduct>());
+			User orderOwner = order.getCreatedByUser();
 			
-			//DaoFactory.getOrderDao().update(order);
-			//DaoFactory.getOrderDao().delete(order);
-			//DaoFactory.getUserDao().update(owner);
+			orderOwner.getOrders().remove(order);
+									
+			DaoFactory.getUserDao().update(orderOwner);
 		
 			return true;
 		}
@@ -115,10 +115,17 @@ public abstract class UserRole {
 		return false;
 	}
 
+	public Order getOrderById( Long orderId) {
+		
+		return DaoFactory.getOrderDao().getOrder(orderId);
+		
+	}
+	
 	public boolean createUser(User user) {
 		
 		if (this.canCreateUser()) {
 			
+			DaoFactory.getUserDao().save(user);
 			return true;
 			
 		}
@@ -126,7 +133,5 @@ public abstract class UserRole {
 		return false;
 		
 	}
-	
-
 	
 }

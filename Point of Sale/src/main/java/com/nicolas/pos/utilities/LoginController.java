@@ -38,6 +38,18 @@ public class LoginController {
 		
 	}
 	
+	public static boolean checkUsernameInUse(String username) {
+		
+		for (User user : DaoFactory.getUserDao().getUsers()) {
+			
+			if ( user.getUsername() == username ) return false;
+			
+		}
+		
+		return true;
+		
+	}
+	
 	public static String encryptPassword(String password) {
 		
 		MessageDigest messageDigest;

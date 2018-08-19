@@ -77,7 +77,7 @@ public class JTableProduct extends JTable implements Observer{
 	
 					    	try{
 					    	
-					    		DaoFactory.getProductDao().delete(product);
+					    		LoginController.getLoggedInUser().getUserRole().deleteProduct(product);
 	
 					    	}catch(Exception e1){
 					    		

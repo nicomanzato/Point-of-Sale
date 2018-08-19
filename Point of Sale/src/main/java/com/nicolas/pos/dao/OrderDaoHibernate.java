@@ -11,7 +11,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.nicolas.pos.model.Order;
-import com.nicolas.pos.utilities.LoginController;
 
 public class OrderDaoHibernate extends DaoHibernate implements OrderDao{
 		
@@ -36,8 +35,9 @@ public class OrderDaoHibernate extends DaoHibernate implements OrderDao{
 	}
 
 	public void delete(Order order){
-	      
-		super.delete(order);
+		
+		order.setCreatedByUser(null);
+		super.update(order);
 	      
 	    this.setChanged();
 	    this.notifyObservers();
@@ -59,6 +59,8 @@ public class OrderDaoHibernate extends DaoHibernate implements OrderDao{
 			criteria.select(orderRoot);
 			
 			criteria.orderBy(session.getCriteriaBuilder().desc(orderRoot.get("orderId")));
+			
+			//criteria.where( session.getCriteriaBuilder().equal( orderRoot.get("deleted"), false));
 			
 			orders = session.createQuery( criteria ).setMaxResults(orderQuantity).list();
 			
@@ -94,6 +96,7 @@ public class OrderDaoHibernate extends DaoHibernate implements OrderDao{
 	    }
 	    
 	    return order;
+	    
 	}
 
 

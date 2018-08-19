@@ -36,13 +36,9 @@ public class JTableOrder extends JTable implements Observer{
 			    @Override
 			    public void mouseReleased(MouseEvent e) {
 			    	
-			    	Order order=null;
-			    	
 			    	Long idOrder = Long.valueOf(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
-			    			
-			    	order = DaoFactory.getOrderDao().getOrder(idOrder);
 			    	
-			    	final JFrame frame = new UpdateOrder(order);
+			    	final JFrame frame = new UpdateOrder(idOrder);
 					
 					frame.setVisible(true);
 			    }
@@ -61,14 +57,10 @@ public class JTableOrder extends JTable implements Observer{
 				    	int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to delete this order?","Warning",JOptionPane.YES_NO_OPTION);
 		                
 		                if(dialogResult == JOptionPane.YES_OPTION){
-		                	
-		                	Order order=null;
 					    	
 					    	Long idOrder = Long.valueOf(table.getModel().getValueAt(table.getSelectedRow(),0).toString());
-					    	
-					    	order = DaoFactory.getOrderDao().getOrder(idOrder);
-	
-		                	LoginController.getLoggedInUser().getUserRole().deleteOrder(order, LoginController.getLoggedInUser());
+						    	
+		                	LoginController.getLoggedInUser().getUserRole().deleteOrder(LoginController.getLoggedInUser().getOrderById(idOrder));
 	
 		                }
 	                
@@ -127,9 +119,9 @@ public class JTableOrder extends JTable implements Observer{
 		
 		this.setRowSorter(sorter);
 		
-		for (Order order : DaoFactory.getOrderDao().getOrders()) {
-			
-			model.addRow(new Object[] { order.getOrderId() ,order.getDate(), "$"+order.getPrice() });
+		for (Order order : LoginController.getLoggedInUser().getOrders()) {
+							
+			model.addRow(new Object[] { order.getOrderId() ,order.getDate(), "$"+order.getPrice() });			
 			
 		}
 		
@@ -140,5 +132,6 @@ public class JTableOrder extends JTable implements Observer{
 	public void update(Observable o, Object arg) {
 		
 		this.setModel(this.createModel());
+		
 	}
 }

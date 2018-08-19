@@ -42,6 +42,11 @@ public class CashierUserRole extends UserRole{
 		return false;
 	}
 
+	@Override
+	public boolean canAccessAllOrders() {
+		return false;
+	}
+
 	
 
 }

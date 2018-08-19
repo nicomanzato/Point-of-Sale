@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
@@ -74,7 +73,7 @@ public class ChangePasswordWindow extends JFrame{
 					
 				} else {
 				
-					JOptionPane.showMessageDialog(null, "Passwords provided do not match", "Success", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Passwords provided do not match", "Error", JOptionPane.INFORMATION_MESSAGE);
 				
 				}
 			}

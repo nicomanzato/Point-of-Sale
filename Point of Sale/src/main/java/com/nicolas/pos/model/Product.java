@@ -16,11 +16,12 @@ public class Product {
 	
 	public Product() { super(); deleted = false;}
 	
-	public Product(Long id, String name, float price) {
+	public Product(Long id, String name, float price, boolean deleted) {
 		super();
 		this.setProductId(id);
 		this.setName(name);
 		this.setPrice(price);
+		this.setDeleted(deleted);
 	}
 	
 	public Product(String name, float price) {

@@ -69,7 +69,7 @@ public class LoginWindow extends JFrame{
 								
 				if (LoginController.login(usernameTextField.getText(), passwordTextField.getText())) {
 					
-					new Main().setVisible(true);;
+					new MainWindow().setVisible(true);;
 					
 					dispose();
 				

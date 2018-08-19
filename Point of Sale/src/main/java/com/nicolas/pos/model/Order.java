@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -26,6 +27,7 @@ public class Order extends Observable{
 	private Long orderId;
 	private Date date;
 	private List<OrderedProduct> products;
+	private User createdByUser;
 	
 	
 	public Order() { 
@@ -78,8 +80,16 @@ public class Order extends Observable{
 		this.products = products;
 	}
 	
-	
-	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "CREATED_BY_USER_ID", nullable = false)
+	public User getCreatedByUser() {
+		return createdByUser;
+	}
+
+	public void setCreatedByUser(User createdByUser) {
+		this.createdByUser = createdByUser;
+	}
+
 	public boolean contains(Product product){
 		
 		for(OrderedProduct auxProduct : this.getProducts()){

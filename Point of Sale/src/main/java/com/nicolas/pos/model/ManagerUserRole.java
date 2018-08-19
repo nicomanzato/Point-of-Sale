@@ -41,5 +41,10 @@ public class ManagerUserRole extends UserRole{
 		return true;
 	}
 
+	@Override
+	public boolean canAccessAllOrders() {
+		return true;
+	}
+
 	
 }

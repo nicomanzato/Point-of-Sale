@@ -102,8 +102,7 @@ public class User {
 		this.password = password;
 	}
 	
-	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
-	@JoinColumn(name = "USER_ID", nullable = false)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy="createdByUser", orphanRemoval = true)
 	@Cascade(CascadeType.ALL)
 	public List<Order> getOrders() {
 		return orders;
@@ -111,6 +110,24 @@ public class User {
 
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
+	}
+	
+	public void addOrder(Order order) {
+		
+		this.getOrders().add(order);
+		
+	}
+	
+	public Order getOrderById(Long orderId) {
+		
+		for (Order order : this.getOrders()) {
+			
+			if (order.getOrderId() == orderId) return order;
+			
+		}
+		
+		return this.getUserRole().getOrderById(orderId);
+		
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)

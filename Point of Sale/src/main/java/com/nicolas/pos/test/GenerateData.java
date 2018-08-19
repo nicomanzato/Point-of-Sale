@@ -1,7 +1,6 @@
 package com.nicolas.pos.test;
 
 import com.nicolas.pos.dao.DaoFactory;
-import com.nicolas.pos.model.User;
 import com.nicolas.pos.utilities.LoginController;
 
 public class GenerateData {

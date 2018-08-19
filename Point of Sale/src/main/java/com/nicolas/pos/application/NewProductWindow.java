@@ -19,7 +19,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class NewProduct extends JFrame {
+public class NewProductWindow extends JFrame {
 
 	/**
 	 * 
@@ -32,7 +32,7 @@ public class NewProduct extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public NewProduct() {
+	public NewProductWindow() {
 		
 		if (LoginController.getLoggedInUser().getUserRole().canCreateProduct()) {
 		
